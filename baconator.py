@@ -3,14 +3,8 @@
 import sys
 import csv
 
-# You are going to want to start with your homework4 graph.py file,
-# but you will want to add/modify things to support the notion of
-# multiple valid edges between two nodes.
 
 import graph
-
-# Needed for the "Gimme20" method
-import json
 
 class Baconator():
 
