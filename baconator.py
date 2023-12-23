@@ -3,7 +3,6 @@
 import sys
 import csv
 
-
 import graph
 
 class Baconator():
@@ -13,22 +12,20 @@ class Baconator():
         movie name and the subsequent columns are the actors.  There
         is NO header on the .csv file.
         """
-        # alt = dont touch bfs,just get the nodes and edit all_Edges to iterate through that node's edges
-        # then find the movie common to the previous actor and take that as the weight
+        #initializes graph
         self.bacongraph = graph.Graph()
 
         with open(filename, "r") as csvfile: # opens file in read mode
             reader = csv.reader(csvfile) # creates a reader object, allows iteration
             for row in reader: 
-                movie = row[0] 
-                actors = row[1:] 
-                #movies and actors are being read correctly...
+                movie = row[0] #movie is first in list
+                actors = row[1:] #actors = rest of items in list
 
-                 # add actor nodes
+                 # add actor nodes if not already in it
                 for actor in actors:
                     if actor not in self.bacongraph: 
-                        self.bacongraph[actor] = None
-
+                        self.bacongraph[actor] = None #initialize actor node
+                    #connects the actor nodes
                     for other_actor in actors:
                             if other_actor != actor:
                                 #connect takes in the names
@@ -53,22 +50,13 @@ class Baconator():
         Brendan Fehr, who appeared in X-Men: First Class with Kevin
         Bacon.
 
-        The best way to discover a baconpath is a breadth first
-        traversal, either starting from the targeted actor or Kevin
-        Bacon and using the resulting path as the minimum baconpath.
-
-        You are going to need to modify your graph.py file as well to
-        support multiple edges, as two actors can be in multiple
-        movies together, but the baconpath itself only includes one of
-        the movies.
+        Uses breadth first traversal and returns the minimum baconpath
 
         """
         
-        print("starting find min baconpath for kevin to "+str(actor))
         myPath = []
         kevinNode = None
-        curMovie = None
-        #if actor is kevin bacon, min path is [kb]
+        #if actor is kevin bacon, min path is [kevin bacon]]
         if actor == "Kevin Bacon":
             myPath.append(actor)
             return myPath
@@ -84,17 +72,14 @@ class Baconator():
         if foundBacon == False:
             return None
         
-
+        #goes backwards from the traversal path
         while kevinNode.previous != None:
 
             movie = kevinNode.previous.edges[kevinNode][0]
             myPath.append(kevinNode.name)
-            myPath.append(movie) #changed from movie
-            print(myPath)
+            myPath.append(movie) 
             kevinNode = kevinNode.previous
-            print(kevinNode)
         
-        print(myPath)
         if kevinNode.name == actor: # arrived at the actor
             myPath.append(actor) 
             return list(reversed(myPath)) # should be from [ actor --> kevin bacon]
@@ -104,23 +89,14 @@ class Baconator():
     
     def is_baconpath(self, path):
         """A check to see if something is a valid Baconpath, but not
-        necessarily a minimal baconpath"""
+        necessarily a minimal baconpath
+        
+        Makes sure the actors are actually connected to each other by that movie
+        Checks the graphnode to see if the wreight btwn the 2 actors is the movie"""
 
-        """
-          make sure the actors are actually connected to each other by that movie
-          check the graphnode to see if the weight between the 2 actors is the movie
-
-          garnered from gradescope tests:
-          bacon --> in the cut --> bacon = valid path
-          end of the list should be kevin bacon
-
-          problem:
-          testing non list, empty list, and known wrong length for is_baconpath
-            Testing that nonexistant name gives an empty list OR None when trying to find a baconpath
-
-            Test Failed: Unable to find nobody
-        """
-        print("is_baconpath for : "+str(path))
+    
+          
+        
         # not a list
         if not isinstance(path, list):
             return False
