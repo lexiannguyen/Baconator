@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#version2
+print("version2")
 import sys
 import csv
 
@@ -126,7 +126,7 @@ class Baconator():
 
             Test Failed: Unable to find nobody
         """
-        print("is_baconpath for : "+str(path))
+        print("check is_baconpath for : "+str(path))
         # not a list
         if not isinstance(path, list):
             return False
