@@ -201,25 +201,6 @@ class Baconator():
             return True
         return False        
 
-    def gimme_20(self):
-        """This should return a string that is a JSON object for an
-        entry in the tests list
-
-        https://gradescope-autograders.readthedocs.io/en/latest/specs/
-
-        that will be visible, and have a score of 20 and a max-score
-        of 20, and be named 'gimme 20' """
-        answer = {
-            "score": 20,
-            "max_score": 20,
-            "visibility": "visible",
-            "name": "gimme 20"
-        }
-
-        # Convert the dictionary to a JSON string
-            # indent = more readable
-        json_answer = json.dumps(answer, indent=2)
-        return json_answer
     
 if __name__ == "__main__":
     baconator = None
